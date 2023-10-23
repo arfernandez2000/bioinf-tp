@@ -24,18 +24,19 @@ def search_orfs(sequence):
             for i in range(0, len(sequence), 3):
                 codon = sequence[i:i+3]
                 if codon == start_codon:
-                    orf = codon
+                    orf += codon
                     inside_orf = True
                 elif codon == stop_codon and inside_orf:
                     orf += codon
                     orfs.append(orf)
                     orf = ""
                     inside_orf = False
+                elif set(stop_codons).isdisjoint(codon) and inside_orf: 
+                    continue
                 elif inside_orf:
                     orf += codon
                 elif orf != "" and not inside_orf:
                     continue
-
 
     return orfs
 def translate_and_save_sequences(input_file, output_file):
@@ -53,12 +54,11 @@ def translate_and_save_sequences(input_file, output_file):
                 orfs_rev = search_orfs(nucleotide_sequence_rev)
 
                 for orf in orfs + orfs_rev:
-                      if all(codon in start_codons for codon in (orf[:3])) and all(codon in stop_codons for codon in (orf[-3:])):
-                        amino_acid_sequence = orf.translate()
-                        fasta_record = SeqRecord(amino_acid_sequence, id=f"{record.id}_ORF",
-                                                    description=f"ORF from {record.id}",
-                                                    letter_annotations={"phred_quality": [40]*len(amino_acid_sequence)})
-                        SeqIO.write(fasta_record, out_handle, "fasta")
+                    amino_acid_sequence = orf.translate(cds=True)
+                    fasta_record = SeqRecord(amino_acid_sequence, id=f"{record.id}_ORF",
+                                                description=f"ORF from {record.id}",
+                                                letter_annotations={"phred_quality": [40]*len(amino_acid_sequence)})
+                    SeqIO.write(fasta_record, out_handle, "fasta")
 
     print(f"Secuencias traducidas y guardadas en '{output_file}'")
 
