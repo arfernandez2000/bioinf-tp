@@ -32,11 +32,11 @@ def search_orfs(sequence):
                     orf = ""
                     inside_orf = False
                 elif set(stop_codons).isdisjoint(codon) and inside_orf: 
-                    continue
+                    break
                 elif inside_orf:
                     orf += codon
                 elif orf != "" and not inside_orf:
-                    continue
+                    break
 
     return orfs
 def translate_and_save_sequences(input_file, output_file):
