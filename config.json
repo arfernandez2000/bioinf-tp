@@ -1,0 +1,7 @@
+{
+    "num_primers": 5,
+    "primer_length": 20,
+    "gc_min": 50,
+    "gc_max": 60,
+    "tm_max": 70
+}
