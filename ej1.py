@@ -4,8 +4,8 @@ from Bio.SeqRecord import SeqRecord
 import argparse
 
 parser = argparse.ArgumentParser(description='Ejercicio 1. Nucleotide GenBank -> Protein FASTA')
-parser.add_argument('-i', help='Input GenBank file (default = sequence.gb)', default='sequence.gb')
-parser.add_argument('-o', help='Output Fatsa file (default = secuencias.fasta)', default='results/secuencias.fasta')
+parser.add_argument('-i', help='Input GenBank file (default = inputs/sequence.gb)', default='inputs/sequence.gb')
+parser.add_argument('-o', help='Output Fatsa file (default = results/secuencias.fasta)', default='results/secuencias.fasta')
 args = parser.parse_args()
 
 def search_orfs(sequence):

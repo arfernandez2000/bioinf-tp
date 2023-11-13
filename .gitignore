@@ -3,4 +3,4 @@
 .env
 swissprot.*
 taxdb.*
-results
+results/*

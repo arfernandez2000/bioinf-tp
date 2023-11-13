@@ -2,19 +2,19 @@
 Help()
 {
    # Display Help
-   echo "Usage: ej2.sh [-h] [-i FASTA_FILE] [-o OUTPUT_BLAST_FILE] [-r] [-s]"
+   echo "Usage: ej2.sh [-h] [-i I] [-o O] [-r]"
    echo
    echo "Ejercicio 2. Protein Fasta -> BLAST Report"
    echo
    echo "optional arguments:"
    echo " -h        Show this help message and exit"
-   echo " -i I      Input Fasta file (default = outputs/ej1/protein.fas)"
-   echo " -o O      Output BLAST Report file (default = outputs/ej2/blast.out)"
+   echo " -i I      Input Fasta file (default = results/secuencias.fasta)"
+   echo " -o O      Output BLAST Report file (default = results/blast.out)"
    echo " -r        Remote run. If not present, run locally"
 }
 
-input="secuencias.fasta"
-output="blast.out"
+input="results/secuencias.fasta"
+output="results/blast.out"
 remote=false
 update=true
 while getopts ":h :s :r i: o:" flag
