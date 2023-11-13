@@ -1,6 +1,12 @@
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+import argparse
+
+parser = argparse.ArgumentParser(description='Ejercicio 1. Nucleotide GenBank -> Protein FASTA')
+parser.add_argument('-i', help='Input GenBank file (default = sequence.gb)', default='sequence.gb')
+parser.add_argument('-o', help='Output Fatsa file (default = secuencias.fasta)', default='results/secuencias.fasta')
+args = parser.parse_args()
 
 def search_orfs(sequence):
     orfs = []
@@ -49,4 +55,8 @@ def translate_and_save_sequences(input_file, output_file):
 
 input_file = "sequence.gb"
 output_file = "secuencias.fasta"
+
+input_file = args.i
+output_file = args.o
+
 translate_and_save_sequences(input_file, output_file)

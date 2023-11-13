@@ -1,0 +1,6 @@
+.fasta
+.gb
+.env
+swissprot.*
+taxdb.*
+results
