@@ -1,5 +1,6 @@
 import json
 import argparse
+import random
 
 from Bio import SeqIO
 from Bio.SeqUtils import GC, MeltingTemp
@@ -7,7 +8,7 @@ from Bio.SeqUtils import GC, MeltingTemp
 def parse_args(): 
     parser = argparse.ArgumentParser(description='Ejercicio 5. Secuencia -> 5 Primers')
     parser.add_argument('-i', help='Input GenBank file (default = alzheimer.gb)', default='alzheimer.gb')
-    parser.add_argument('-o', help='Output Primers file (default = outputs/ej5/primers.out)', default='outputs/ej5/primers.out')
+    parser.add_argument('-o', help='Output Primers file (default = primers.out)', default='primers.out')
     parser.add_argument('-c', help='Configuration file (default = config.json)', default='config.json')
     args = parser.parse_args()
 
@@ -29,15 +30,18 @@ def read_transcript_sequence(genbank_file):
 
 def design_primers(transcript_sequence, config):
     primer_list = []
-    for i in range(config["num_primers"]):
-        primer_length = config["primer_length"]
-        gc_min = config["gc_min"]
-        gc_max = config["gc_max"]
-        tm_max = config["tm_max"]
 
+    primer_length_min = config["primer_length_min"]
+    primer_length_max = config["primer_length_max"]
+    gc_min = config["gc_min"]
+    gc_max = config["gc_max"]
+    tm_max = config["tm_max"]
+
+
+    for i in range(config["num_primers"]):
         # Diseñar el primer
         start_index = i * (len(transcript_sequence) // config["num_primers"])
-        end_index = start_index + primer_length
+        end_index = start_index + random.randint(primer_length_min, primer_length_max)
         primer_candidate = transcript_sequence[start_index:end_index]
 
         # Ajustar la GC del primer
@@ -47,7 +51,6 @@ def design_primers(transcript_sequence, config):
             primer_candidate = transcript_sequence[start_index:end_index]
 
         # Ajustar la temperatura de melting del primer
-        # TODO: Fijarse que metodo para calcular la temperatura de melting usar
         while MeltingTemp.Tm_Wallace(primer_candidate) > tm_max:
             end_index -= 1
             primer_candidate = transcript_sequence[start_index:end_index]
@@ -63,15 +66,17 @@ def main():
     # Cargar configuración desde el archivo JSON
     config = load_config(config_file)
 
-    # Leer la secuencia del transcripto desde el archivo GenBank
+    # Leer la secuencia del transcripto
     transcript_sequence = read_transcript_sequence(genbank_file)
 
     # Diseñar primers
     primers = design_primers(transcript_sequence, config)
 
-    # Imprimir los primers diseñados
-    for i, primer in enumerate(primers, 1):
-        print(f"Primer {i}: {primer}")
+    # Guardar los primers en el archivo de salida
+    f = open(out_path, "w")
+    for primer in primers:
+        f.write(str(primer) + "\n")
+    f.close()
 
 if __name__ == "__main__":
     main()
