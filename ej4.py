@@ -7,7 +7,7 @@ import dir_helper as dirh
 import argparse
 
 parser = argparse.ArgumentParser(description='Ejercicio 2. EMBOSS')
-parser.add_argument('-i', help='Input Fasta file (default = results/sequence.fas)', default='results/sequence.fas')
+parser.add_argument('-i', help='Input Fasta file (default = results/sequence.fas)', default='results/AY792511.1/sequence.fas')
 parser.add_argument('-o', help='Output file (default = results/sequence.orf)', default='results/secuencias.fasta')
 parser.add_argument('-opc', help='Options orf or domain_analysis(default = orf)', default='orf')
 args = parser.parse_args()
