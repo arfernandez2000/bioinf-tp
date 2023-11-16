@@ -16,7 +16,7 @@ Help()
 }
 
 input="results/secuencias.fasta"
-nucleotideInput="results/AY792511.1/sequence.fas"
+nucleotideInput="results/secuencias_n.fasta"
 output="results/blast.out"
 remote=false
 update=true

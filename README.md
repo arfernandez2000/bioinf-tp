@@ -6,6 +6,8 @@ Implementación de los ejercicios para el Trabajo Práctico de la materia.
 Para el correcto funcionamiento del codgio se necesita:
 - Instalar Python 3
 - Instalar mafft
+- Instalar EMBOSS
+- Instalar Biopython
 
 ### Instalar mafft
 
@@ -20,6 +22,27 @@ En Ubuntu:
 ```bash
 sudo apt-get update
 sudo apt-get install mafft
+```
+
+### Instalar EMBOSS
+
+En MacOS:
+
+```bash
+brew install brewsci/bio/emboss
+```
+
+En Ubuntu:
+
+```bash
+sudo apt-get update
+sudo apt-get install emboss
+```
+
+### Instalar Biopython
+
+```bash
+pip install biopython
 ```
 
 ## Ejercicios 1
@@ -96,7 +119,7 @@ Donde:
 Para ejecutar el ejercicio 5, se debe correr el siguiente comando:
 
 ```bash
-python ej5.py [-i I] [-o O] [-c C]
+python ej5.py [-h] [-i I] [-o O] [-c C]
 ```
 
 Donde:
