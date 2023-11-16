@@ -22,7 +22,17 @@ sudo apt-get update
 sudo apt-get install mafft
 ```
 
-## Ejercicios
+## Ejercicios 1
+Para ejecutar el ejercicio 1, se debe correr el siguiente comando:
+
+```bash
+./ej1.py [-h] [-i I] [-o O]
+```
+
+Donde:
+- h: Muestra el menú de ayuda.
+- i: Especifica el archivo de entrada. Debe ser en formato .gb o .gbk y ser una secuencia de nucleótidos
+- o: Especifica el archivo de salida en formato fasta.
 
 ### Ejercicio 2
 
@@ -67,6 +77,19 @@ Donde:
 A partir de los resultados obtenidos en el Ejercicio 2, se seleccionaron los 10 mejores y se generó un archivo llamado **msa_input.fasta** dentro de la carpeta *inputs*. En caso de no especificarse otra entrada, este archivo se utiliza como predeterminado.
 
 El código emplea la función ``MafftCommandline()`` de Biopython, que actúa como un envoltorio para MAFFT (Multiple Alignment using Fast Fourier Transform). Este comando no solo realiza el alineamiento, sino que también, al incluir el parámetro ``treeout=True``, genera un archivo llamado **msa_input.fasta.tree** que contiene el árbol filogenético calculado por el programa. 
+
+## Ejercicios 4
+Para ejecutar el ejercicio 4, se debe correr el siguiente comando:
+
+```bash
+./ej2.py [-h] [-i I] [-o O] [-opc OPC]
+```
+
+Donde:
+- h: Muestra el menú de ayuda.
+- i: Especifica el archivo de entrada. Debe ser en formato .gb o .gbk y ser una secuencia de nucleótidos
+- o: Especifica el archivo de salida en formato fasta.
+- opc: Especifica la opcion de analisis - calcular orf: orf - analisis de dominio de datos con la bd de PROSITE: domain 
 
 ### Ejercicio 5
 
