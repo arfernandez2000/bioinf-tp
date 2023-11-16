@@ -20,13 +20,9 @@ def translate_and_save(orfs, record, out_handle):
         SeqIO.write(fasta_record, out_handle, "fasta")
 
 def save_orfs_to_file(record, orfs,  output_file):
-    # Create a directory for the record if it doesn't exist
-    dir = os.path.dirname(output_file)
-    record_directory = os.path.join(dir, record.id)
-    os.makedirs(record_directory, exist_ok=True)
 
     # Save all ORFs to a single file for the record
-    file_path = os.path.join(record_directory, f"{output_file}")
+    file_path = f"results/secuencias_n.fasta"
     with open(file_path, "w") as file:
         file.write(f">Length {len(orfs)}\n")
         for i, orf_sequence in enumerate(orfs):
@@ -69,7 +65,7 @@ def translate_and_save_sequences(input_file, output_file):
             for i in range(3):
                 orfs.extend(search_orfs(sequence[i:]))
             translate_and_save(orfs,record,out_handle)
-            save_orfs_to_file(record,orfs,"results")
+            save_orfs_to_file(record,orfs,output_file)
     print(f"Secuencias traducidas y guardadas en '{output_file}'")
 
 if __name__ == "__main__":
