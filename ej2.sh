@@ -11,13 +11,17 @@ Help()
    echo " -i I      Input Fasta file (default = results/secuencias.fasta)"
    echo " -o O      Output BLAST Report file (default = results/blast.out)"
    echo " -r        Remote run. If not present, run locally"
+   echo " -f F      Input Fasta file for nucleotides (default = results/AY792511.1/sequence.fas)"
+   echo " -n        Compares nucleotides agains ncbi database"
 }
 
 input="results/secuencias.fasta"
+nucleotideInput="results/AY792511.1/sequence.fas"
 output="results/blast.out"
 remote=false
 update=true
-while getopts ":h :s :r i: o:" flag
+remoteNucleotides=false
+while getopts ":h :s :r :n i: o: f:" flag
 do
     case "${flag}" in
         h)
@@ -27,11 +31,18 @@ do
         o) output=${OPTARG};;
         r) remote=true;;
         s) update=false;;
-        
+        f) nucleotideInput=${OPTARG};;
+        n) remoteNucleotides=true;; 
     esac
 done
 
-if $remote
+if $remoteNucleotides
+then
+    echo "Compares nucleotides agains remote BLAST..."
+    echo $output
+    blastn -db nt -query $nucleotideInput -out $output -outfmt 5 -remote
+    echo "Done"
+elif $remote
 then
     echo "Running remote BLAST..."
     blastp -db swissprot -query $input -out $output -outfmt 5 -remote

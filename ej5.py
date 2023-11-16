@@ -11,7 +11,7 @@ import dir_helper as dirh
 def parse_args(): 
     parser = argparse.ArgumentParser(description='Ejercicio 5. Secuencia -> 5 Primers')
     parser.add_argument('-i', help='Input GenBank file (default = inputs/sequence.gb)', default='inputs/sequence.gb')
-    parser.add_argument('-o', help='Output Primers file (default = primers.out)', default='primers.out')
+    parser.add_argument('-o', help='Output Primers file (default = results/primers.out)', default='results/primers.out')
     parser.add_argument('-c', help='Configuration file (default = config.json)', default='config.json')
     args = parser.parse_args()
 

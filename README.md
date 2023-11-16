@@ -5,6 +5,22 @@ Implementación de los ejercicios para el Trabajo Práctico de la materia.
 ## Prerequisitos
 Para el correcto funcionamiento del codgio se necesita:
 - Instalar Python 3
+- Instalar mafft
+
+### Instalar mafft
+
+En MacOS:
+
+```bash
+brew install mafft
+```
+
+En Ubuntu:
+
+```bash
+sudo apt-get update
+sudo apt-get install mafft
+```
 
 ## Ejercicios
 
@@ -13,24 +29,25 @@ Para el correcto funcionamiento del codgio se necesita:
 Para ejecutar el ejercicio 2, se debe correr el siguiente comando:
 
 ```bash
-./ej2.sh [-h] [-i I] [-o O] [-r]
+./ej2.sh [-h] [-i I] [-o O] [-r] [-n] [-f F]
 ```
 
 Donde:
 - h: Muestra el menú de ayuda.
-- i: Especifica el archivo de entrada. Debe ser en formato .fasta o .fas
+- i: Especifica el archivo de entrada. Debe ser en formato .fasta o .fas y ser una secuencia de aminoácidos
 - o: Especifica el archivo de salida.
 - r: Es un flag para correr BLAST remoto. De no estar, se corre localmente
+- n: Es un flag para correr BLAST remoto pero con la base de datos de NCBI
+- f: Especifica el archivo de entrada cuando se corre con el tag *n*. Debe ser en formato .fasta o .fas y ser una secuencia de nucleótidos
 
 **Explicación**
 
-Primero se reciben los argumentos, que de estar vacios se usan los archivos defaults. Tanto para la ejecución local como remota se utiliza el comando ``blastp``, ya que se están comparando dos secuencias de aminoácidos. Al comando se le especifica que utilice la base de datos swissprot, que fue proporcionada por la catedra. Esto indica que se comparara la secuancia del archivo de entrada por cada una de las secuancias de la base de datos. Por ultimo, si se ejecuto con ``-r`` el comando se corre con el argumento ``-remote`` para utilice BLAST de manera remoto y no con el BLAST que pordría estar instalado en la computadora. 
+Para ejecutar los comandos de BLAST, se reciben argumentos, que si están vacíos, se utilizan los archivos predeterminados. Se utiliza el comando ``blastp`` tanto para la ejecución local como remota, ya que se están comparando secuencias de aminoácidos. Se especifica que utilice la base de datos swissprot proporcionada por la cátedra, lo que implica comparar la secuencia del archivo de entrada con cada secuencia en la base de datos.
 
-El archivo de salida es un xml que tiene los siguientes tags relevantes: 
-- ``<Hit>``:
-- ``<Hsp_evalue>``:
+Al ejecutar con el flag ``-n``, se realiza la ejecución remota contra la base de datos NCBI utilizando el archivo especificado después del tag ``-f``. Además, al tratarse de secuencias de nucleótidos, se utiliza el comando ``blastn``.
 
-Los hits estan ordenados de menor E-value a mayor, es decir de la secuancia mas parecida a la menos parecida en las comparaciones. 
+El archivo de salida es un archivo XML que contiene toda la información de los resultados encontrados por BLAST. Los resultados se ordenan desde las mejores comparaciones hasta las peores, teniendo en cuenta el E-value del alineamiento. 
+
 
 ### Ejercicio 3
 
@@ -44,3 +61,27 @@ Donde:
 - h: Muestra el menú de ayuda.
 - i: Especifica el archivo de entrada. Debe ser en formato .fasta o .fas
 - o: Especifica el archivo de salida.
+
+**Explicación**
+
+A partir de los resultados obtenidos en el Ejercicio 2, se seleccionaron los 10 mejores y se generó un archivo llamado **msa_input.fasta** dentro de la carpeta *inputs*. En caso de no especificarse otra entrada, este archivo se utiliza como predeterminado.
+
+El código emplea la función ``MafftCommandline()`` de Biopython, que actúa como un envoltorio para MAFFT (Multiple Alignment using Fast Fourier Transform). Este comando no solo realiza el alineamiento, sino que también, al incluir el parámetro ``treeout=True``, genera un archivo llamado **msa_input.fasta.tree** que contiene el árbol filogenético calculado por el programa. 
+
+### Ejercicio 5
+
+Para ejecutar el ejercicio 5, se debe correr el siguiente comando:
+
+```bash
+python ej5.py [-i I] [-o O] [-c C]
+```
+
+Donde:
+- i: Especifica el archivo de entrada. Debe ser en formato .fasta o .fas
+- o: Especifica el archivo de salida.
+- c: Especifica el archivo de configuración. Debe ser en formato .gb
+
+**Explicación**
+A partir de una secuencia, se diseña primers. Los criterios tomados en cuenta para este diseño son la cantidad de pares de bases, el porcentaje de GC, la temperatura de melting y el GC-lock.
+
+Para su implementación, se utilizaron funciones de la librería de BioPython.
