@@ -68,3 +68,20 @@ A partir de los resultados obtenidos en el Ejercicio 2, se seleccionaron los 10 
 
 El código emplea la función ``MafftCommandline()`` de Biopython, que actúa como un envoltorio para MAFFT (Multiple Alignment using Fast Fourier Transform). Este comando no solo realiza el alineamiento, sino que también, al incluir el parámetro ``treeout=True``, genera un archivo llamado **msa_input.fasta.tree** que contiene el árbol filogenético calculado por el programa. 
 
+### Ejercicio 5
+
+Para ejecutar el ejercicio 5, se debe correr el siguiente comando:
+
+```bash
+python ej5.py [-i I] [-o O] [-c C]
+```
+
+Donde:
+- i: Especifica el archivo de entrada. Debe ser en formato .fasta o .fas
+- o: Especifica el archivo de salida.
+- c: Especifica el archivo de configuración. Debe ser en formato .gb
+
+**Explicación**
+A partir de una secuencia, se diseña primers. Los criterios tomados en cuenta para este diseño son la cantidad de pares de bases, el porcentaje de GC, la temperatura de melting y el GC-lock.
+
+Para su implementación, se utilizaron funciones de la librería de BioPython.
