@@ -8,11 +8,22 @@ from Bio.SeqUtils import nt_search
 
 import dir_helper as dirh
 
-def parse_args(): 
-    parser = argparse.ArgumentParser(description='Ejercicio 5. Secuencia -> 5 Primers')
-    parser.add_argument('-i', help='Input GenBank file (default = inputs/sequence.gb)', default='inputs/sequence.gb')
-    parser.add_argument('-o', help='Output Primers file (default = results/primers.out)', default='results/primers.out')
-    parser.add_argument('-c', help='Configuration file (default = config.json)', default='config.json')
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Ejercicio 5. Secuencia -> 5 Primers")
+    parser.add_argument(
+        "-i",
+        help="Input GenBank file (default = inputs/sequence.gb)",
+        default="inputs/sequence.gb",
+    )
+    parser.add_argument(
+        "-o",
+        help="Output Primers file (default = results/primers.out)",
+        default="results/primers.out",
+    )
+    parser.add_argument(
+        "-c", help="Configuration file (default = config.json)", default="config.json"
+    )
     args = parser.parse_args()
 
     genbank_file = args.i
@@ -21,15 +32,18 @@ def parse_args():
 
     return genbank_file, out_path, config_file
 
+
 def load_config(config_file):
     with open(config_file, "r") as f:
         config = json.load(f)
     return config
 
+
 # Lee la secuencia del transcripto desde un archivo GenBank
 def read_transcript_sequence(genbank_file):
     record = SeqIO.read(genbank_file, "genbank")
     return str(record.seq)
+
 
 def design_primers(transcript_sequence, config):
     primer_list = []
@@ -41,7 +55,6 @@ def design_primers(transcript_sequence, config):
     gc_max = config["gc_max"]
     tm_max = config["tm_max"]
     gc_lock_length = 2
-
 
     while len(primer_list) < num_primers:
         # Calculo tamaño del primer y el índice de inicio y fin
@@ -66,14 +79,16 @@ def design_primers(transcript_sequence, config):
             gc_content >= gc_min
             and gc_content <= gc_max
             and melting_temp <= tm_max
-            and last_nucleotides.count("G") + last_nucleotides.count("C") == gc_lock_length
+            and last_nucleotides.count("G") + last_nucleotides.count("C")
+            == gc_lock_length
         ):
             primer_list.append(primer_candidate)
 
     return primer_list
 
+
 def verify_primer():
-     # Parsear argumentos
+    # Parsear argumentos
     genbank_file, out_path, config_file = parse_args()
 
     # Cargar configuración desde el archivo JSON
@@ -86,15 +101,23 @@ def verify_primer():
     with open(out_path, "r") as f:
         for i in range(config["num_primers"]):
             primer = f.readline()
-            primer = primer[0:len(primer)-1]
+            primer = primer[0 : len(primer) - 1]
 
             occurrences = nt_search(transcript_sequence, primer)
-            
+
             tm = MeltingTemp.Tm_GC(primer)
-            
+
             gc_content = GC(primer)
 
-            print("Primer: \n Ocurrencias: " + str(occurrences) + "\t Tm: " + str(tm) + "\t GC: " + str(gc_content))
+            print(
+                "Primer: \n Ocurrencias: "
+                + str(occurrences)
+                + "\t Tm: "
+                + str(tm)
+                + "\t GC: "
+                + str(gc_content)
+            )
+
 
 def main():
     # Parsear argumentos
@@ -117,6 +140,7 @@ def main():
     for primer in primers:
         f.write(str(primer) + "\n")
     f.close()
+
 
 if __name__ == "__main__":
     main()
