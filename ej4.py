@@ -7,13 +7,13 @@ import dir_helper as dirh
 import argparse
 
 parser = argparse.ArgumentParser(description='Ejercicio 2. EMBOSS')
-parser.add_argument('-i', help='Input Fasta file (default = results/AY792511.1/sequence.fas)', default='results/AY792511.1/sequence.fas')
+parser.add_argument('-i', help='Input Fasta file (default = results/secuencias.fasta)', default='results/secuencias.fasta')
 parser.add_argument('-o', help='Output file (default = results/sequence.orf)', default='results/secuencias.fasta')
 parser.add_argument('-opc', help='Options orf or domain_analysis(default = orf)', default='orf')
 args = parser.parse_args()
 
 def run_emboss_getorf(input_fasta, output_aa):
-    subprocess.run(["getorf", "-sequence", input_fasta, "-outseq", output_aa], check=True)
+    subprocess.run(["getorf", "-sequence", input_fasta, "-outseq", output_aa], check=True) 
 
 def run_emboss_prosit(input_fasta, output):
     os.system(f"patmatmotifs -sequence {input_fasta} -outfile {output}")  
