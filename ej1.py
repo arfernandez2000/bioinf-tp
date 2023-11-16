@@ -8,7 +8,7 @@ import dir_helper as dirh
 
 parser = argparse.ArgumentParser(description='Ejercicio 1. Nucleotide GenBank -> Protein FASTA')
 parser.add_argument('-i', help='Input GenBank file (default = inputs/sequence.gb)', default='inputs/sequence.gb')
-parser.add_argument('-o', help='Output Fatsa file (default = results/secuencias_a.fas)', default='results/secuencias.fasta')
+parser.add_argument('-o', help='Output Fatsa file (default = results/secuencias.fasta)', default='results/secuencias.fasta')
 args = parser.parse_args()
 
 def translate_and_save(orfs, record, out_handle):
@@ -19,13 +19,14 @@ def translate_and_save(orfs, record, out_handle):
                                 letter_annotations={"phred_quality": [40]*len(amino_acid_sequence)})
         SeqIO.write(fasta_record, out_handle, "fasta")
 
-def save_orfs_to_file(record, orfs, output_directory):
+def save_orfs_to_file(record, orfs,  output_file):
     # Create a directory for the record if it doesn't exist
-    record_directory = os.path.join(output_directory, record.id)
+    dir = os.path.dirname(output_file)
+    record_directory = os.path.join(dir, record.id)
     os.makedirs(record_directory, exist_ok=True)
 
     # Save all ORFs to a single file for the record
-    file_path = os.path.join(record_directory, f"sequence.fas")
+    file_path = os.path.join(record_directory, f"{output_file}")
     with open(file_path, "w") as file:
         file.write(f">Length {len(orfs)}\n")
         for i, orf_sequence in enumerate(orfs):
