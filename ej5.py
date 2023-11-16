@@ -6,6 +6,8 @@ from Bio import SeqIO
 from Bio.SeqUtils import GC, MeltingTemp
 from Bio.SeqUtils import nt_search
 
+import dir_helper as dirh
+
 def parse_args(): 
     parser = argparse.ArgumentParser(description='Ejercicio 5. Secuencia -> 5 Primers')
     parser.add_argument('-i', help='Input GenBank file (default = inputs/sequence.gb)', default='inputs/sequence.gb')
@@ -97,6 +99,9 @@ def verify_primer():
 def main():
     # Parsear argumentos
     genbank_file, out_path, config_file = parse_args()
+
+    # Crear directorios de salida si es necesario
+    dirh.create_output_dirs_from_file_path(out_path)
 
     # Cargar configuración desde el archivo JSON
     config = load_config(config_file)

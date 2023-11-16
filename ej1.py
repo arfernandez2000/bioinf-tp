@@ -4,10 +4,11 @@ from Bio.SeqRecord import SeqRecord
 import argparse
 import os
 
+import dir_helper as dirh
 
 parser = argparse.ArgumentParser(description='Ejercicio 1. Nucleotide GenBank -> Protein FASTA')
 parser.add_argument('-i', help='Input GenBank file (default = inputs/sequence.gb)', default='inputs/sequence.gb')
-parser.add_argument('-o', help='Output Fatsa file (default = results/secuencias_a.fas)', default='results/secuencias_a.fasta')
+parser.add_argument('-o', help='Output Fatsa file (default = results/secuencias_a.fas)', default='results/secuencias.fasta')
 args = parser.parse_args()
 
 def translate_and_save(orfs, record, out_handle):
@@ -74,4 +75,5 @@ if __name__ == "__main__":
     input_file = args.i
     output_file = args.o
 
+    dirh.create_output_dirs_from_file_path(output_file)
     translate_and_save_sequences(input_file, output_file)
