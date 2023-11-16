@@ -26,7 +26,7 @@ sudo apt-get install mafft
 Para ejecutar el ejercicio 1, se debe correr el siguiente comando:
 
 ```bash
-./ej1.py [-h] [-i I] [-o O]
+python ej1.py [-h] [-i I] [-o O]
 ```
 
 Donde:
@@ -82,7 +82,7 @@ El código emplea la función ``MafftCommandline()`` de Biopython, que actúa co
 Para ejecutar el ejercicio 4, se debe correr el siguiente comando:
 
 ```bash
-./ej2.py [-h] [-i I] [-o O] [-opc OPC]
+python ej4.py [-h] [-i I] [-o O] [-opc OPC]
 ```
 
 Donde:
